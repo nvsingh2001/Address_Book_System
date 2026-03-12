@@ -13,6 +13,9 @@ class AddressBook:
     def add_contact(self, contact):
         self.__contacts.append(contact)
 
+    def delete_contact(self, contact):
+        self.__contacts.remove(contact)
+
     def display_contacts(self):
         for contact in self.__contacts:
             print("-" * 30)

@@ -21,7 +21,8 @@ def main_menu():
     print("1. Add Contact")
     print("2. Display Contacts")
     print("3. Edit Contact")
-    print("4. Exit")
+    print("4. Delete Contact")
+    print("5. Exit")
 
 
 def edit_contact_menu():
@@ -39,7 +40,6 @@ def edit_contact_menu():
 
 def welcome_screen():
     os.system("cls" if os.name == "nt" else "clear")
-
     print(banner)
     print("WELCOME TO YOUR ADDRESS BOOK")
     print("----------------------------")

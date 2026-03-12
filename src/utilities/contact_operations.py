@@ -60,3 +60,17 @@ def edit_contact(address_book):
 
     except Exception as e:
         print(f"Error while editing contact: {e}")
+
+
+def delete_contact(address_book):
+    try:
+        name = input("Enter the full name of the contact: ")
+        first_name, last_name = name.split(" ")
+        contact = address_book.get_contact(first_name, last_name)
+        if not contact:
+            raise KeyError("Contact does not exists")
+
+        address_book.delete_contact(contact)
+        print("Contact deleted successfully")
+    except Exception as e:
+        print(f"Error while deleting contact: {e}")

@@ -1,7 +1,20 @@
-from models import AddressBook
-from utilities import main_menu, add_contact, edit_contact
+from models import AddressBook, Contact
+from utilities import main_menu, add_contact, edit_contact, delete_contact
 
 address_book = AddressBook()
+
+address_book.add_contact(
+    Contact(
+        "John",
+        "Doe",
+        "1234567890",
+        "p4g0e@example.com",
+        "123 Main St",
+        "Anytown",
+        "CA",
+        "12345",
+    )
+)
 
 
 def main():
@@ -19,6 +32,9 @@ def main():
                 edit_contact(address_book)
                 input("Press Enter to continue...")
             case "4":
+                delete_contact(address_book)
+                input("Press Enter to continue...")
+            case "5":
                 break
 
 
