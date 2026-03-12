@@ -3,8 +3,8 @@ import os
 banner = r"""
 
 
-/$$$$$$        /$$       /$$                                              /$$$$$$$                      /$$      
-/$$__  $$      | $$      | $$                                             | $$__  $$                    | $$      
+  /$$$$$$        /$$       /$$                                              /$$$$$$$                      /$$      
+ /$$__  $$      | $$      | $$                                             | $$__  $$                    | $$      
 | $$  \ $$  /$$$$$$$  /$$$$$$$  /$$$$$$   /$$$$$$   /$$$$$$$ /$$$$$$$      | $$  \ $$  /$$$$$$   /$$$$$$ | $$   /$$
 | $$$$$$$$ /$$__  $$ /$$__  $$ /$$__  $$ /$$__  $$ /$$_____//$$_____/      | $$$$$$$  /$$__  $$ /$$__  $$| $$  /$$/
 | $$__  $$| $$  | $$| $$  | $$| $$  \__/| $$$$$$$$|  $$$$$$|  $$$$$$       | $$__  $$| $$  \ $$| $$  \ $$| $$$$$$/ 
@@ -18,11 +18,19 @@ banner = r"""
 
 def main_menu():
     welcome_screen()
+    print("1. Add Address Book")
+    print("2. Open Address Book")
+    print("3. List all Address Books")
+    print("4. Exit")
+
+
+def address_book_menu():
+    welcome_screen()
     print("1. Add Contact")
     print("2. Display Contacts")
     print("3. Edit Contact")
     print("4. Delete Contact")
-    print("5. Exit")
+    print("5. Go Back to Main Menu")
 
 
 def edit_contact_menu():

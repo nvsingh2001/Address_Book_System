@@ -1,6 +1,46 @@
-from utilities import get_input
 from models import Contact
-from utilities import edit_contact_menu
+from ui import (
+    address_book_menu,
+    get_input,
+    edit_contact_menu,
+)
+from services import AddressBook
+
+
+def create_new_addressbook(addressbook_services):
+    try:
+        addressbook_name = get_input("Address Book Name")
+        addressbook_services.add_addressbook(addressbook_name, AddressBook())
+    except ValueError as e:
+        print(f"Error creating address book: {e}")
+
+
+def open_address_book(addressbook_services):
+    try:
+        addressbook_name = get_input("Address Book Name")
+        address_book = addressbook_services.get_addressbook(addressbook_name)
+        print(f"Opening address book: {addressbook_name}")
+
+        while True:
+            address_book_menu()
+            option = input("Enter your choice: ")
+            match option:
+                case "1":
+                    add_contact(address_book)
+                    input("Press Enter to continue...")
+                case "2":
+                    print(address_book)
+                    input("Press Enter to continue...")
+                case "3":
+                    edit_contact(address_book)
+                    input("Press Enter to continue...")
+                case "4":
+                    delete_contact(address_book)
+                    input("Press Enter to continue...")
+                case "5":
+                    break
+    except Exception as e:
+        print(f"Error: {e}")
 
 
 def add_contact(address_book):
@@ -18,9 +58,6 @@ def add_contact(address_book):
 
         values = [get_input(field) for field in fields]
 
-        if address_book.get_contact(values[0], values[1]):
-            raise ValueError("Contact already exists")
-
         address_book.add_contact(Contact(*values))
 
     except Exception as e:
@@ -32,8 +69,6 @@ def edit_contact(address_book):
         name = input("Enter the full name of the contact: ")
         first_name, last_name = name.split(" ")
         contact = address_book.get_contact(first_name, last_name)
-        if not contact:
-            raise KeyError("Contact does not exists")
 
         edit_contact_menu()
         option = input("Enter your choice: ")
@@ -66,11 +101,7 @@ def delete_contact(address_book):
     try:
         name = input("Enter the full name of the contact: ")
         first_name, last_name = name.split(" ")
-        contact = address_book.get_contact(first_name, last_name)
-        if not contact:
-            raise KeyError("Contact does not exists")
-
-        address_book.delete_contact(contact)
+        address_book.delete_contact(first_name, last_name)
         print("Contact deleted successfully")
     except Exception as e:
         print(f"Error while deleting contact: {e}")

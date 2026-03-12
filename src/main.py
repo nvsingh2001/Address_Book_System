@@ -1,7 +1,17 @@
-from models import AddressBook, Contact
-from utilities import main_menu, add_contact, edit_contact, delete_contact
+from models import Contact
+from ui import (
+    main_menu,
+    create_new_addressbook,
+    open_address_book,
+)
+from services import AddressBookManager, AddressBook
 
-address_book = AddressBook()
+# For test
+addressbook_services = AddressBookManager()
+
+addressbook_services.add_addressbook("default", AddressBook())
+
+address_book = addressbook_services.get_addressbook("default")
 
 address_book.add_contact(
     Contact(
@@ -23,18 +33,16 @@ def main():
         option = input("Enter your choice: ")
         match option:
             case "1":
-                add_contact(address_book)
+                create_new_addressbook(addressbook_services)
                 input("Press Enter to continue...")
             case "2":
-                address_book.display_contacts()
+                open_address_book(addressbook_services)
                 input("Press Enter to continue...")
             case "3":
-                edit_contact(address_book)
+                print("List of Address Books:")
+                print(addressbook_services)
                 input("Press Enter to continue...")
             case "4":
-                delete_contact(address_book)
-                input("Press Enter to continue...")
-            case "5":
                 break
 
 
