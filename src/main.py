@@ -1,42 +1,43 @@
-from contact import Contact
+from models import Contact
+from models import AddressBook
+from utilities import main_menu, get_input
+
+address_book = AddressBook()
 
 
-def welcome_screen():
+def add_contact():
+    try:
+        fields = [
+            "First Name",
+            "Last Name",
+            "Phone Number",
+            "Email",
+            "Address",
+            "City",
+            "State",
+            "Zip Code",
+        ]
 
-    banner = r"""
+        values = [get_input(field) for field in fields]
 
+        address_book.add_contact(Contact(*values))
 
-    /$$$$$$        /$$       /$$                                              /$$$$$$$                      /$$      
-    /$$__  $$      | $$      | $$                                             | $$__  $$                    | $$      
-    | $$  \ $$  /$$$$$$$  /$$$$$$$  /$$$$$$   /$$$$$$   /$$$$$$$ /$$$$$$$      | $$  \ $$  /$$$$$$   /$$$$$$ | $$   /$$
-    | $$$$$$$$ /$$__  $$ /$$__  $$ /$$__  $$ /$$__  $$ /$$_____//$$_____/      | $$$$$$$  /$$__  $$ /$$__  $$| $$  /$$/
-    | $$__  $$| $$  | $$| $$  | $$| $$  \__/| $$$$$$$$|  $$$$$$|  $$$$$$       | $$__  $$| $$  \ $$| $$  \ $$| $$$$$$/ 
-    | $$  | $$| $$  | $$| $$  | $$| $$      | $$_____/ \____  $$\____  $$      | $$  \ $$| $$  | $$| $$  | $$| $$_  $$ 
-    | $$  | $$|  $$$$$$$|  $$$$$$$| $$      |  $$$$$$$ /$$$$$$$//$$$$$$$/      | $$$$$$$/|  $$$$$$/|  $$$$$$/| $$ \  $$
-    |__/  |__/ \_______/ \_______/|__/       \_______/|_______/|_______/       |_______/  \______/  \______/ |__/  \__/
-                                                                                                                    
-                                                                                                                    
-                                                                                                                    """
-    print(banner)
-    print("WELCOME TO YOUR ADDRESS BOOK")
-    print("----------------------------")
+    except Exception as e:
+        print(f"Error adding contact: {e}")
 
 
 def main():
-    welcome_screen()
-
-    contact1 = Contact(
-        "John",
-        "Doe",
-        "123-456-7890",
-        "0Xh0F@example.com",
-        "123 Main St",
-        "Anytown",
-        "CA",
-        "12345",
-    )
-
-    print(contact1)
+    while True:
+        main_menu()
+        option = input("Enter your choice: ")
+        match option:
+            case "1":
+                add_contact()
+            case "2":
+                address_book.display_contacts()
+                input("Press Enter to continue...")
+            case "3":
+                break
 
 
 if __name__ == "__main__":
