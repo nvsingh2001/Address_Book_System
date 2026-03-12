@@ -1,10 +1,12 @@
 from models import Contact
+from services.addressbook_manager import AddressBookManager
 from ui import (
     address_book_menu,
     get_input,
     edit_contact_menu,
 )
 from services import AddressBook
+from ui.menus import search_contact_menu
 
 
 def create_new_addressbook(addressbook_services):
@@ -13,6 +15,43 @@ def create_new_addressbook(addressbook_services):
         addressbook_services.add_addressbook(addressbook_name, AddressBook())
     except ValueError as e:
         print(f"Error creating address book: {e}")
+
+
+def search_contacts(addressbook_manager: AddressBookManager):
+    try:
+        while True:
+            search_contact_menu()
+            options = input("Enter your choice: ")
+            match options:
+                case "1":
+                    city = get_input("City")
+                    contacts = addressbook_manager.search_contacts(city=city)
+                    if not contacts:
+                        print("No contacts found in this city.")
+                    for contact in contacts:
+                        print(contact)
+                    input("Press enter to continue")
+                case "2":
+                    state = get_input("State")
+                    contacts = addressbook_manager.search_contacts(state=state)
+                    if not contacts:
+                        print("No contacts found in this state.")
+                    for contact in contacts:
+                        print(contact)
+                    input("Press enter to continue")
+                case "3":
+                    state = get_input("State")
+                    city = get_input("City")
+                    contacts = addressbook_manager.search_contacts(city, state)
+                    if not contacts:
+                        print("No contacts found in this city and state.")
+                    for contact in contacts:
+                        print(contact)
+                    input("Press enter to continue")
+                case "4":
+                    break
+    except Exception as e:
+        print(f"Error: {e}")
 
 
 def addressbook_menu(address_book):

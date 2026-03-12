@@ -5,6 +5,7 @@ from ui import (
     open_address_book,
 )
 from services import AddressBookManager, AddressBook
+from ui.cli_handler import search_contacts
 
 # For test
 addressbook_services = AddressBookManager()
@@ -42,6 +43,8 @@ def main():
                 print(addressbook_services)
                 input("Press Enter to continue...")
             case "4":
+                search_contacts(addressbook_services)
+            case "5":
                 break
 
 

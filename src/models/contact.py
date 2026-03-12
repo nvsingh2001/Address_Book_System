@@ -23,5 +23,8 @@ class Contact:
             f"Zip Code: {self.zip_code}\n"
         )
 
+    def __repr__(self):
+        return f"Contact({self.first_name}, {self.last_name}, {self.phone_number}, {self.email}, {self.address}, {self.city}, {self.state}, {self.zip_code})"
+
     def __eq__(self, other):
         return self.first_name == other.first_name and self.last_name == other.last_name
