@@ -1,6 +1,6 @@
 class AddressBook:
     def __init__(self):
-        self.__contacts = []
+        self.__contacts = list()
 
     def get_contact(self, first_name, last_name):
         for contact in self.__contacts:
