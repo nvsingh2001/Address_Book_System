@@ -37,7 +37,6 @@ def main():
                 input("Press Enter to continue...")
             case "2":
                 open_address_book(addressbook_services)
-                input("Press Enter to continue...")
             case "3":
                 print("List of Address Books:")
                 print(addressbook_services)

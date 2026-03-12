@@ -9,9 +9,10 @@ class AddressBook:
                 and contact.last_name.casefold() == last_name.casefold()
             ):
                 return contact
+        return None
 
     def add_contact(self, contact):
-        if self.get_contact(contact.first_name, contact.last_name):
+        if contact in self.__contacts:
             raise ValueError("Contact already exists")
         self.__contacts.append(contact)
 

@@ -22,3 +22,6 @@ class Contact:
             f"State: {self.state}\n"
             f"Zip Code: {self.zip_code}\n"
         )
+
+    def __eq__(self, other):
+        return self.first_name == other.first_name and self.last_name == other.last_name

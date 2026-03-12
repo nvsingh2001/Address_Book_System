@@ -15,30 +15,33 @@ def create_new_addressbook(addressbook_services):
         print(f"Error creating address book: {e}")
 
 
+def addressbook_menu(address_book):
+    while True:
+        address_book_menu()
+        option = input("Enter your choice: ")
+        match option:
+            case "1":
+                add_contact(address_book)
+                input("Press Enter to continue...")
+            case "2":
+                print(address_book)
+                input("Press Enter to continue...")
+            case "3":
+                edit_contact(address_book)
+                input("Press Enter to continue...")
+            case "4":
+                delete_contact(address_book)
+                input("Press Enter to continue...")
+            case "5":
+                break
+
+
 def open_address_book(addressbook_services):
     try:
         addressbook_name = get_input("Address Book Name")
         address_book = addressbook_services.get_addressbook(addressbook_name)
         print(f"Opening address book: {addressbook_name}")
-
-        while True:
-            address_book_menu()
-            option = input("Enter your choice: ")
-            match option:
-                case "1":
-                    add_contact(address_book)
-                    input("Press Enter to continue...")
-                case "2":
-                    print(address_book)
-                    input("Press Enter to continue...")
-                case "3":
-                    edit_contact(address_book)
-                    input("Press Enter to continue...")
-                case "4":
-                    delete_contact(address_book)
-                    input("Press Enter to continue...")
-                case "5":
-                    break
+        addressbook_menu(address_book)
     except Exception as e:
         print(f"Error: {e}")
 
