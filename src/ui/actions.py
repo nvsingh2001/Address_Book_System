@@ -75,6 +75,8 @@ def display_search_results(contacts):
     if not contacts:
         print("No contacts found.")
     else:
+        print("Total contacts found:", len(contacts))
+        print("#" * 50)
         for contact in contacts:
             print(contact)
     input("\nPress Enter to continue...")
