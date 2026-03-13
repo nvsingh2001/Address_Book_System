@@ -1,4 +1,4 @@
-from models import Contact
+from services.file_io import TextFileIoStrategy
 from ui import (
     main_menu,
     create_new_addressbook,
@@ -8,37 +8,39 @@ from ui import (
 from services import AddressBookManager
 from ui.cli_handler import view_contacts_by_location
 
-import random
+FILENAME = "address_book.txt"
 
 # For test
-addressbook_services = AddressBookManager()
-
-addressbook_services.add_addressbook("default")
-
-address_book = addressbook_services.get_addressbook("default")
-
-contacts = [
-    Contact(
-        f"First{i}",
-        f"Last{i}",
-        f"900000{str(i).zfill(4)}",
-        f"user{i}@example.com",
-        f"{100 + i} Example Street",
-        ["New York", "Los Angeles", "Chicago", "Houston", "Phoenix"][i % 5],
-        ["NY", "CA", "IL", "TX", "AZ"][i % 5],
-        f"{10000 + i}",
-    )
-    for i in range(1, 201)
-]
-
-random.shuffle(contacts)
-
-
-for contact in contacts:
-    address_book.add_contact(contact)
+# addressbook_services = AddressBookManager()
+#
+# addressbook_services.add_addressbook("default")
+#
+# address_book = addressbook_services.get_addressbook("default")
+#
+# contacts = [
+#     Contact(
+#         f"First{i}",
+#         f"Last{i}",
+#         f"900000{str(i).zfill(4)}",
+#         f"user{i}@example.com",
+#         f"{100 + i} Example Street",
+#         ["New York", "Los Angeles", "Chicago", "Houston", "Phoenix"][i % 5],
+#         ["NY", "CA", "IL", "TX", "AZ"][i % 5],
+#         f"{10000 + i}",
+#     )
+#     for i in range(1, 201)
+# ]
+#
+# random.shuffle(contacts)
+#
+#
+# for contact in contacts:
+#     address_book.add_contact(contact)
 
 
 def main():
+    addressbook_services = AddressBookManager()
+    addressbook_services.load_data(FILENAME, TextFileIoStrategy())
     while True:
         main_menu()
         option = input("Enter your choice: ")
@@ -57,6 +59,7 @@ def main():
             case "5":
                 view_contacts_by_location(addressbook_services)
             case "6":
+                addressbook_services.save_data(FILENAME, TextFileIoStrategy())
                 print("Goodbye!")
                 break
 

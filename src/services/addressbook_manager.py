@@ -21,6 +21,9 @@ class AddressBookManager:
     def get_addressbook(self, addressbook_name):
         return self.__address_books[addressbook_name]
 
+    def exists(self, addressbook_name):
+        return addressbook_name in self.__address_books
+
     def delete_addressbook(self, addressbook_name):
         if not self.__address_books.__contains__(addressbook_name):
             raise ValueError("Address book does not exists")
@@ -51,3 +54,9 @@ class AddressBookManager:
     def _remove_from_indecies(self, contact):
         self.__city_to_persons[contact.city].remove(contact)
         self.__state_to_persons[contact.state].remove(contact)
+
+    def load_data(self, filename, strategy):
+        strategy.load_data(filename, addressbook_manager=self)
+
+    def save_data(self, filename, strategy):
+        strategy.save_data(filename, self.__address_books)
