@@ -1,3 +1,6 @@
+from services.sorting import SortingStrategy
+
+
 class AddressBook:
     def __init__(self, on_add=None, on_delete=None):
         self.__contacts = list()
@@ -34,7 +37,5 @@ class AddressBook:
     def __str__(self):
         return "\n".join(str(contact) for contact in self.__contacts)
 
-    def sort_contacts(self):
-        self.__contacts.sort(
-            key=lambda contact: (contact.first_name, contact.last_name)
-        )
+    def sort_contacts(self, strategy: SortingStrategy):
+        strategy.sort(self.__contacts)

@@ -75,3 +75,15 @@ def view_contact_menu():
     print("1. View Contact by City")
     print("2. View Contact by State")
     print("3. Go Back to Main Menu")
+
+
+def sort_contact_menu():
+    os.system("cls" if os.name == "nt" else "clear")
+    print(banner)
+    print("Sort Contact Menu")
+    print("-----------------")
+    print("1. Sort Contact by Name")
+    print("2. Sort Contact by City")
+    print("3. Sort Contact by State")
+    print("4. Sort Contact by Zip Code")
+    print("5. Go Back to Main Menu")

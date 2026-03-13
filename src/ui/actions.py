@@ -1,7 +1,8 @@
 from models import Contact
 from services.addressbook_manager import AddressBookManager
+from services.sorting import SortByCity, SortByName, SortByState, SortByZipCode
 from ui.helper import get_input
-from ui.menus import edit_contact_menu, search_contact_menu
+from ui.menus import edit_contact_menu, search_contact_menu, sort_contact_menu
 
 
 def handle_add_addressbook(addressbook_services):
@@ -165,6 +166,16 @@ def handle_display_contacts(address_book):
 
 
 def handle_sort_contacts(address_book):
-    address_book.sort_contacts()
+    sort_contact_menu()
+    choice = input("Enter your choice: ")
+
+    strategies = {
+        "1": SortByName(),
+        "2": SortByCity(),
+        "3": SortByState(),
+        "4": SortByZipCode(),
+    }
+
+    address_book.sort_contacts(strategies[choice])
     print("Contacts sorted successfully.")
     input("\nPress Enter to continue...")
