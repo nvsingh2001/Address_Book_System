@@ -8,6 +8,8 @@ from ui import (
 from services import AddressBookManager
 from ui.cli_handler import view_contacts_by_location
 
+import random
+
 # For test
 addressbook_services = AddressBookManager()
 
@@ -28,6 +30,9 @@ contacts = [
     )
     for i in range(1, 201)
 ]
+
+random.shuffle(contacts)
+
 
 for contact in contacts:
     address_book.add_contact(contact)

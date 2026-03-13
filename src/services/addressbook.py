@@ -33,3 +33,8 @@ class AddressBook:
 
     def __str__(self):
         return "\n".join(str(contact) for contact in self.__contacts)
+
+    def sort_contacts(self):
+        self.__contacts.sort(
+            key=lambda contact: (contact.first_name, contact.last_name)
+        )

@@ -32,7 +32,8 @@ def address_book_menu():
     print("2. Display Contacts")
     print("3. Edit Contact")
     print("4. Delete Contact")
-    print("5. Go Back to Main Menu")
+    print("5. Sort the contacts in Address Book")
+    print("6. Go Back to Main Menu")
 
 
 def edit_contact_menu():

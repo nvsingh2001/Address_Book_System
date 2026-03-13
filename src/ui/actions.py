@@ -162,3 +162,9 @@ def handle_display_contacts(address_book):
     print("\n--- Contacts ---")
     print(address_book)
     input("\nPress Enter to continue...")
+
+
+def handle_sort_contacts(address_book):
+    address_book.sort_contacts()
+    print("Contacts sorted successfully.")
+    input("\nPress Enter to continue...")

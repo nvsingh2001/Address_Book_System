@@ -51,6 +51,8 @@ def manage_addressbook(address_book):
             case "4":
                 actions.handle_delete_contact(address_book)
             case "5":
+                actions.handle_sort_contacts(address_book)
+            case "6":
                 break
 
 
