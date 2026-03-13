@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from models.contact import Contact
 import csv
+import json
 
 
 class FileIoStrategy(ABC):
@@ -59,7 +60,11 @@ class TextFileIoStrategy(FileIoStrategy):
             with open(filename, mode="w", encoding="utf-8") as file:
                 for ab_name, address_book in address_books.items():
                     for contact in address_book.get_contacts():
-                        line = f"{ab_name}|{contact.first_name}|{contact.last_name}|{contact.phone_number}|{contact.email}|{contact.address}|{contact.city}|{contact.state}|{contact.zip_code}\n"
+                        line = (
+                            f"{ab_name}|{contact.first_name}|{contact.last_name}|{contact.phone_number}|"
+                            f"{contact.email}|{contact.address}|{contact.city}|"
+                            f"{contact.state}|{contact.zip_code}\n"
+                        )
                         file.write(line)
         except IOError as e:
             print("Error saving file:", e)
@@ -84,7 +89,7 @@ class CsvFileIoStrategy(FileIoStrategy):
             with open(filename, mode="r", encoding="utf-8", newline="") as file:
                 reader = csv.DictReader(file)
                 for row in reader:
-                    ab_name = row["address_book_name"]
+                    ab_name = row["addressbook_name"]
 
                     if not addressbook_manager.exists(ab_name):
                         addressbook_manager.add_addressbook(ab_name)
@@ -110,7 +115,7 @@ class CsvFileIoStrategy(FileIoStrategy):
 
     def save_data(self, filename, address_books):
         try:
-            with open(filename, mode="w", encoding="utf-8") as file:
+            with open(filename, mode="w", encoding="utf-8", newline="") as file:
                 writer = csv.DictWriter(file, fieldnames=self.fieldnames)
                 writer.writeheader()
 
@@ -129,5 +134,61 @@ class CsvFileIoStrategy(FileIoStrategy):
                                 "zip_code": contact.zip_code,
                             }
                         )
+        except IOError as e:
+            print("Error saving file:", e)
+
+
+class JsonFileIoStrategy(FileIoStrategy):
+    def load_data(self, filename, addressbook_manager):
+        try:
+            with open(filename, mode="r", encoding="utf-8") as file:
+                address_books = json.load(file)
+                for ab_name, contacts in address_books.items():
+                    if not addressbook_manager.exists(ab_name):
+                        addressbook_manager.add_addressbook(ab_name)
+
+                    for contact in contacts:
+                        new_contact = Contact(
+                            contact["first_name"],
+                            contact["last_name"],
+                            contact["phone_number"],
+                            contact["email"],
+                            contact["address"],
+                            contact["city"],
+                            contact["state"],
+                            contact["zip_code"],
+                        )
+                        addressbook_manager.get_addressbook(ab_name).add_contact(
+                            new_contact
+                        )
+        except FileNotFoundError:
+            pass
+        except Exception as e:
+            print("Error while loading the data", e)
+
+    def save_data(self, filename, address_books):
+        try:
+            address_books_dict = {}
+
+            for ab_name, address_book in address_books.items():
+                contacts = []
+                for contact in address_book.get_contacts():
+                    contacts.append(
+                        {
+                            "first_name": contact.first_name,
+                            "last_name": contact.last_name,
+                            "phone_number": contact.phone_number,
+                            "email": contact.email,
+                            "address": contact.address,
+                            "city": contact.city,
+                            "state": contact.state,
+                            "zip_code": contact.zip_code,
+                        }
+                    )
+
+                address_books_dict[ab_name] = contacts
+
+            with open(filename, mode="w", encoding="utf-8") as file:
+                json.dump(address_books_dict, file, indent=4)
         except IOError as e:
             print("Error saving file:", e)
