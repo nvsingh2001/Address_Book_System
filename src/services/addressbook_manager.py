@@ -3,10 +3,11 @@ from .addressbook import AddressBook
 
 
 class AddressBookManager:
-    def __init__(self):
+    def __init__(self, fileio_strategy):
         self.__address_books = dict()
         self.__city_to_persons = defaultdict(list)
         self.__state_to_persons = defaultdict(list)
+        self.__fileio_strategy = fileio_strategy
 
     def add_addressbook(self, addressbook_name):
         if self.__address_books.__contains__(addressbook_name):
@@ -55,8 +56,8 @@ class AddressBookManager:
         self.__city_to_persons[contact.city].remove(contact)
         self.__state_to_persons[contact.state].remove(contact)
 
-    def load_data(self, filename, strategy):
-        strategy.load_data(filename, addressbook_manager=self)
+    def load_data(self, filename):
+        self.__fileio_strategy.load_data(filename, addressbook_manager=self)
 
-    def save_data(self, filename, strategy):
-        strategy.save_data(filename, self.__address_books)
+    def save_data(self, filename):
+        self.__fileio_strategy.save_data(filename, self.__address_books)

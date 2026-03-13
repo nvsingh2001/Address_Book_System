@@ -1,4 +1,4 @@
-from services.file_io import TextFileIoStrategy
+from services.file_io import CsvFileIoStrategy
 from ui import (
     main_menu,
     create_new_addressbook,
@@ -8,10 +8,14 @@ from ui import (
 from services import AddressBookManager
 from ui.cli_handler import view_contacts_by_location
 
-FILENAME = "address_book.txt"
+# import random
+# from models import Contact
+
+CSV_FILENAME = "address_book.csv"
+TEXT_FILENAME = "address_book.txt"
 
 # For test
-# addressbook_services = AddressBookManager()
+# addressbook_services = AddressBookManager(CsvFileIoStrategy())
 #
 # addressbook_services.add_addressbook("default")
 #
@@ -39,8 +43,8 @@ FILENAME = "address_book.txt"
 
 
 def main():
-    addressbook_services = AddressBookManager()
-    addressbook_services.load_data(FILENAME, TextFileIoStrategy())
+    addressbook_services = AddressBookManager(CsvFileIoStrategy())
+    addressbook_services.load_data(CSV_FILENAME)
     while True:
         main_menu()
         option = input("Enter your choice: ")
@@ -59,7 +63,7 @@ def main():
             case "5":
                 view_contacts_by_location(addressbook_services)
             case "6":
-                addressbook_services.save_data(FILENAME, TextFileIoStrategy())
+                addressbook_services.save_data(CSV_FILENAME)
                 print("Goodbye!")
                 break
 
