@@ -22,7 +22,8 @@ def main_menu():
     print("2. Open Address Book")
     print("3. List all Address Books")
     print("4. Search Contacts")
-    print("5. Exit")
+    print("5. View Contacts by Location")
+    print("6. Exit")
 
 
 def address_book_menu():
@@ -63,3 +64,13 @@ def welcome_screen():
     print(banner)
     print("WELCOME TO YOUR ADDRESS BOOK")
     print("----------------------------")
+
+
+def view_contact_menu():
+    os.system("cls" if os.name == "nt" else "clear")
+    print(banner)
+    print("View Contact By Location Menu")
+    print("-----------------------------")
+    print("1. View Contact by City")
+    print("2. View Contact by State")
+    print("3. Go Back to Main Menu")

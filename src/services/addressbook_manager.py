@@ -1,11 +1,19 @@
+from collections import defaultdict
+from .addressbook import AddressBook
+
+
 class AddressBookManager:
     def __init__(self):
         self.__address_books = dict()
+        self.__city_to_persons = defaultdict(list)
+        self.__state_to_persons = defaultdict(list)
 
-    def add_addressbook(self, addressbook_name, address_book):
+    def add_addressbook(self, addressbook_name):
         if self.__address_books.__contains__(addressbook_name):
             raise ValueError("Address book already exists")
-        self.__address_books[addressbook_name] = address_book
+        self.__address_books[addressbook_name] = AddressBook(
+            self._update_indecies, self._remove_from_indecies
+        )
 
     def __str__(self) -> str:
         return "\n".join(self.__address_books.keys())
@@ -29,3 +37,17 @@ class AddressBookManager:
             if (city is None or contact.city.casefold() == city)
             and (state is None or contact.state.casefold() == state)
         ]
+
+    def get_contacts_by_city(self):
+        return self.__city_to_persons
+
+    def get_contacts_by_state(self):
+        return self.__state_to_persons
+
+    def _update_indecies(self, contact):
+        self.__city_to_persons[contact.city].append(contact)
+        self.__state_to_persons[contact.state].append(contact)
+
+    def _remove_from_indecies(self, contact):
+        self.__city_to_persons[contact.city].remove(contact)
+        self.__state_to_persons[contact.state].remove(contact)
